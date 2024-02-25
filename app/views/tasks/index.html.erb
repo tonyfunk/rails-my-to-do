@@ -3,14 +3,20 @@
   <ul class="list-group">
     <% @tasks.each do |task| %>
       <li class="list-group-item d-flex justify-content-between align-items-center">
-      <%= link_to task.title, "#", data: { bs_toggle: "modal", bs_target: "#taskDetailModal#{task.id}" } %>
-      <span class="badge bg-primary rounded-pill"><%= task.due_date %></span>
+      <%= link_to task.title, "#", data: { bs_toggle: "modal", bs_target: "#taskDetailModal#{task.id}" }, class: "text-decoration-none" %>
+      <% if task.status == "pending" %>
+      <span class="badge bg-success rounded-pill"><%= task.status %></span>
+      <% elsif task.status == "in progress" %>
+      <span class="badge bg-primary rounded-pill"><%= task.status %></span>
+      <% else %>
+      <span class="badge bg-danger rounded-pill"><%= task.status %></span>
+      <% end %>
       </li>
     <% end %>
   </ul>
   <% @tasks.each do |task| %>
   <div class="modal fade" id="taskDetailModal<%= task.id %>" tabindex="-1" aria-labelledby="taskDetailModalLabel<%= task.id %>" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="taskDetailModalLabel<%= task.id %>"><%= task.title %></h5>
@@ -19,11 +25,9 @@
         <div class="modal-body">
           <%= task.description %>
           <br>
-          Due Date: <%= task.due_date %>
-          <br>
           Status: <%= task.status %>
           <br>
-          Priority: <%= task.priority %>
+          Due Date: <%= task.due_date %>
         </div>
         <div class="modal-footer">
           <%= link_to 'Edit', edit_task_path(task), class: 'btn btn-primary' %>
@@ -32,6 +36,5 @@
       </div>
     </div>
   </div>
-<% end %>
-
+  <% end %>
 </div>
