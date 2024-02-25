@@ -1,0 +1,8 @@
+<%= simple_form_for(task) do |f| %>
+  <%= f.input :title %>
+  <%= f.input :description %>
+  <%= f.input :status, collection: Task::STATUS %>
+  <%= f.input :priority, collection: Task::PRIO %>
+  <%= f.input :due_date %>
+  <%= f.submit %>
+<% end %>
